@@ -1,15 +1,13 @@
 ---
-title: Welcome to Middleman
+title: Beyla, An OpenSourcery Prototype
 ---
 
-<div class="welcome">
-  <h1>Middleman is Watching</h1>
-  <p class="doc">
-    <%= link_to "Read Online Documentation", "http://middlemanapp.com/" %>
-  </p>
-  <ul>
-	<% 3.times do |num| %>
-    <li>Puppy <%= num %>
-  <% end %>
-  </ul>
-</div>
+  <div class="row">
+    <div class="large-12 columns">
+    <%= partial "/orbit" %>    
+    <hr />
+    </div>
+  </div>
+  <div class="row">
+    <%= partial "/homepageblocks" %>
+  </div>

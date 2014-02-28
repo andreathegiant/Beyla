@@ -27,37 +27,44 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
-  
-  <body class="antialiased">
-
-    <div class="row">
-      <div class="large-3 small-6 columns">
-        <%= partial "header" %>
-      </div>
-      <div class="large-6 large-offset-3 small-6 columns right">
-        <%= partial "/quicklinks" %>
-     </div>
-     <div class="large-12 columns">
-      <%= partial "/navigation" %>
-     </div>
+<body class="antialiased">
+ <div class="row">
+    <div class="large-3 small-6 columns">
+      <%= partial "header" %>
     </div>
-
-    <div class = "row">
-      <div class="large-12 columns">
-        <%= yield %>
-      </div>
+    <div class="large-6 large-offset-3 small-6 columns right">
+      <%= partial "quicklinks" %>
     </div>
+    <div class="large-12 columns">
+      <%= partial "navigation" %>
+    </div>
+  </div>
+
+<!-- First Band (Slider) -->
+<div class = "row">
+  <div class="large-6 large-offset-3 columns">
+   <%= yield %>
+  </div>
+</div>
+<!-- Three-up Content Blocks -->
     
-    <footer class="row">
-      <div class="large-12 columns">
-        <%= partial "footer" %>
-      </div>
-    </footer>
+<!-- Call to Action Panel -->
+<div class="row">
+  <div class="large-12 columns"> 
+    <%= partial "contact" %>
+  </div>
+</div>
 
+<!-- Footer -->      
+  <footer class="row">
+    <div class="large-12 columns">
+      <%= partial "footer" %>
+    </div>
+     
+  </footer>
     <script>
       $(document)
         .foundation();
     </script>
-
   </body>
 </html>

@@ -1,0 +1,107 @@
+<nav class="top-bar">
+  <ul class="title-area">
+    <!-- Title Area -->
+    <li class="name">
+      <h1><a href="#">Top Bar Title </a></h1>
+    </li>
+    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <!-- Left Nav Section -->
+    <ul class="left">
+      <li class="divider"></li>
+      <li class="active"><%= link_to 'Main Item 1', '#' %></li>
+      <li class="divider"></li>
+      <li><%= link_to 'Main Item 2', '#' %></li>
+      <li class="divider"></li>
+      <li class="has-dropdown"><%= link_to 'Main Item 3', '#' %>
+
+        <ul class="dropdown">
+          <li class="has-dropdown"><%= link_to 'Dropdown level 1a', '#' %>
+
+            <ul class="dropdown">
+              <li><label>Dropdown Level 2 Label</label></li>
+              <li><%= link_to 'Dropdown level 2a', '#' %></li>
+              <li><%= link_to 'Dropdown level 2b', '#' %></li>
+              <li class="has-dropdown"><%= link_to 'Dropdown level 2c', '#' %>
+
+                <ul class="dropdown">
+                  <li><label>Dropdown Level 3 Label</label></li>
+                  <li><%= link_to 'Dropdown level 3a', '#' %></li>
+                  <li><%= link_to 'Dropdown level 3b', '#' %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to 'Dropdown level 3c', '#' %></li>
+                </ul>
+              </li>
+              <li><%= link_to 'Dropdown level 2d', '#' %></li>
+              <li><%= link_to 'Dropdown level 2e', '#' %></li>
+              <li><%= link_to 'Dropdown level 2f', '#' %></li>
+            </ul>
+          </li>
+          <li><%= link_to 'Dropdown level 1b', '#' %></li>
+          <li><%= link_to 'Dropdown level 1c', '#' %></li>
+          <li class="divider"></li>
+          <li><%= link_to 'Dropdown level 1d', '#' %></li>
+          <li><%= link_to 'Dropdown level 1e', '#' %></li>
+          <li><%= link_to 'Dropdown level 1f', '#' %></li>
+          <li class="divider"></li>
+          <li><a href="#">See all &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="divider"></li>
+    </ul>
+
+    <!-- Right Nav Section -->
+    <ul class="right">
+      <li class="divider hide-for-small"></li>
+      <li class="has-dropdown"><%= link_to 'Main Item 4', '#' %>
+
+        <ul class="dropdown">
+          <li><label>Dropdown Level 1 Label</label></li>
+          <li class="has-dropdown"><%= link_to 'Dropdown level 1a', '#' %>
+
+            <ul class="dropdown">
+              <li><%= link_to 'Dropdown level 2a', '#' %></li>
+              <li><%= link_to 'Dropdown level 2b', '#' %></li>
+              <li class="has-dropdown"><%= link_to 'Dropdown level 2c', '#' %>
+
+                <ul class="dropdown">
+                  <li><%= link_to 'Dropdown level 3a', '#' %></li>
+                  <li><%= link_to 'Dropdown level 3b', '#' %></li>
+                  <li><%= link_to 'Dropdown level 3c', '#' %></li>
+                </ul>
+              </li>
+              <li><%= link_to 'Dropdown level 2d', '#' %></li>
+              <li><%= link_to 'Dropdown level 2e', '#' %></li>
+              <li><%= link_to 'Dropdown level 2f', '#' %></li>
+            </ul>
+          </li>
+          <li><%= link_to 'Dropdown level 1b', '#' %></li>
+          <li><%= link_to 'Dropdown level 1c', '#' %></li>
+          <li class="divider"></li>
+          <li><label>Dropdown Level 1 Label</label></li>
+          <li><%= link_to 'Dropdown level 1d', '#' %></li>
+          <li><%= link_to 'Dropdown level 1e', '#' %></li>
+          <li><%= link_to 'Dropdown level 1f', '#' %></li>
+          <li class="divider"></li>
+          <li><%= link_to 'See all', '#' %></li>
+        </ul>
+      </li>
+      <li class="divider"></li>
+      <li class="has-form">
+        <form>
+          <div class="row collapse">
+            <div class="small-8 columns">
+              <input type="text">
+            </div>
+            <div class="small-4 columns">
+              <%= link_to 'Search', '#', :class => "alert button" %>
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </section>
+</nav>
