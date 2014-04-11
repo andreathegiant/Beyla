@@ -1,0 +1,82 @@
+////////////////////////
+// States Partials
+//
+// Code here shouldn’t generate any selectors or rules.
+////////////////////////
+
+// ** Styleguide ** //
+
+// * Headings & Anchors * //
+@if $states-styleguide-headings-anchors {
+  a:link {
+    h1, h2, h3, h4, h5, h6,
+    h1 &, h2 &, h3 &, h4 &, h5 &, h6 & {
+      color: $anchor-font-color;
+    }
+  }
+  a:visited {
+    h1, h2, h3, h4, h5, h6,
+    h1 &, h2 &, h3 &, h4 &, h5 &, h6 & {
+      color: $anchor-font-color-visited;
+    }
+  }
+  a:hover,
+  a:focus {
+    h1, h2, h3, h4, h5, h6,
+    h1 &, h2 &, h3 &, h4 &, h5 &, h6 & {
+      color: $anchor-font-color-hover;
+    }
+  }
+  a:active {
+    h1, h2, h3, h4, h5, h6,
+    h1 &, h2 &, h3 &, h4 &, h5 &, h6 & {
+      color: $anchor-font-color-active;
+    }
+  }
+}
+
+// * Unordered Lists * //
+@if $states-styleguide-unordered-lists {
+  ul {
+    &.square { @extend %square; }
+    &.circle { @extend %circle; }
+    &.disc { @extend %disc; }
+    &.no-bullet { @extend %no-bullet; }
+  }
+}
+
+// * Feed icon * //
+@if $states-styleguide-feed-icon {
+  .feed-icon img {
+    @include radius(0);
+    border: none;
+    padding: 0;
+  }
+}
+
+
+// ** Modules ** //
+
+// * Secondary tabs * //
+@if $states-modules-secondary-tabs {
+  ul.tabs.secondary {
+    @include sub-nav(false);
+  }
+}
+
+// * Main-nav * //
+@if $states-modules-main-nav-accordion {
+  ul.sf-menu.sf-accordion {
+    @include sf-main-nav-accordion;
+  }
+}
+
+// * Dropdown * //
+@if $states-modules-dropdown {
+  #block-user-login,
+  #block-system-user-menu {
+    h2.open[data-dropdown] {
+      @include dropdown-button-open();
+    }
+  }
+}

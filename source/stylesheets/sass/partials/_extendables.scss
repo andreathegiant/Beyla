@@ -1,0 +1,88 @@
+////////////////////////
+// Extendables Partial
+//
+// Sass extendable classes, ids, and placeholders that are used elsewhere.
+// Code here shouldn’t generate any selectors or rules on their own.
+////////////////////////
+
+// ** Element Hidden ** //
+// Used for elements which should not be immediately displayed to any user. An
+// example would be a collapsible fieldset that will be expanded with a click
+// from a user. The effect of this class can be toggled with the jQuery show()
+// and hide() functions.
+// -- @see system.base.css
+
+%element-hidden {
+  display: none;
+}
+
+
+// ** Element Invisible ** //
+// Used for information required for screen-reader users to understand and use
+// the site where visual display is undesirable. Information provided in this
+// manner should be kept concise, to avoid unnecessary burden on the user.
+// "!important" is used to prevent unintentional overrides.
+// -- @see system.base.css
+
+%element-invisible {
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+}
+
+
+// ** Element Invisible Off ** //
+// Just toggles off the Element Invisible effect. Useful for state changing.
+
+%element-invisible-off {
+  clip: auto;
+  height: auto;
+  overflow: auto;
+  position: static !important;
+  width: auto;
+}
+
+// ** Element Focusable ** //
+// Invisible except when focused.
+
+%element-focusable {
+  @extend %element-invisible;
+
+  &:active,
+  &:focus {
+    @extend %element-invisible-off;
+  }
+}
+
+
+// ** List Styles ** //
+
+%no-bullet {
+  list-style: none;
+  margin-#{$default-float}: 0;
+  li {
+    ul,
+    ol {
+      list-style: none;
+      margin-#{$default-float}: rem-calc(18);
+      margin-bottom: 0;
+    }
+  }
+}
+%square {
+  list-style-type: square;
+  margin-#{$default-float}: 1.1rem;
+  li ul { list-style: inherit; }
+}
+%circle {
+  list-style-type: circle;
+  margin-#{$default-float}: 1.1rem;
+  li ul { list-style: inherit; }
+}
+%disc {
+  list-style-type: disc;
+  margin-#{$default-float}: 1.1rem;
+  li ul { list-style: inherit; }
+}
