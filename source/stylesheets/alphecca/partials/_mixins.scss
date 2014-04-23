@@ -1,0 +1,1092 @@
+////////////////////////
+// Mixins Partial
+//
+// Sass mixins that generate selectors or rules when called elsewhere.
+// Code here shouldn’t generate any selectors or rules on their own.
+////////////////////////
+
+// ** Global ** //
+
+// Bold header
+@mixin boldheader($font-weight, $color: $eigengrau, $font-style: "", $text-transform: "") {
+  @if $font-style != "" {
+    font-style: $font-style;
+  }
+  @if $text-transform != "" {
+    text-transform: $text-transform;
+  }
+  color: $color;
+  font-weight: $font-weight;
+}
+
+// Quiet header
+@mixin quietheader($font-weight, $color: $gray, $font-style: "", $text-transform: "") {
+  @if $font-style != "" {
+    font-style: $font-style;
+  }
+  @if $text-transform != "" {
+    text-transform: $text-transform;
+  }
+  color: $color;
+  font-weight: $font-weight;
+}
+
+// Declare font-face
+@mixin declare-font-face($font-family, $font-filename, $font-weight: normal, $font-style: normal, $font-stretch: normal) {
+  @font-face {
+    font-family: '#{$font-family}';
+    src: url('../vendor/alphecca/fonts/#{$font-family}/#{$font-filename}-webfont.eot');
+    src: url('../vendor/alphecca/fonts/#{$font-family}/#{$font-filename}-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../vendor/alphecca/fonts/#{$font-family}/#{$font-filename}-webfont.woff') format('woff'),
+         url('../vendor/alphecca/fonts/#{$font-family}/#{$font-filename}-webfont.ttf') format('truetype'),
+         url('../vendor/alphecca/fonts/#{$font-family}/#{$font-filename}-webfont.svg##{$font-family}') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+    font-stretch: $font-stretch;
+  }
+}
+
+// We use this to control border radius.
+// $radius - Default: $global-radius || 4px
+@mixin radius($radius:$global-radius) {
+  @if $radius {
+    @include border-radius($radius);
+  }
+}
+
+// We use this to create equal side border radius on elements
+// $side - Options: left, right, top, bottom
+@mixin side-radius($side, $radius:$global-radius) {
+  @if $side == left {
+    @include border-top-left-radius($radius);
+    @include border-bottom-left-radius($radius);
+  }
+  @else if $side == right {
+    @include border-top-right-radius($radius);
+    @include border-bottom-right-radius($radius);
+  }
+  @else if $side == top {
+    @include border-top-right-radius($radius);
+    @include border-top-left-radius($radius);
+  }
+  @else if $side == bottom {
+    @include border-bottom-right-radius($radius);
+    @include border-bottom-left-radius($radius);
+  }
+}
+
+// We use this to add a glowing effect to block elements
+// $selector - Used for selector state. Default: focus, Options: hover, active, visited
+// $fade-time - Default: 300ms
+// $glowing-effect-color - Default: fade-out($primary-color, .25)
+@mixin block-glowing-effect($selector:focus, $fade-time:300ms, $glowing-effect-color:fade-out($primary-color, .25)) {
+  @include transition(box-shadow $fade-time, border-color $fade-time ease-in-out);
+
+  &:#{$selector} {
+    @include box-shadow(0 0 5px $glowing-effect-color);
+    border-color: $glowing-effect-color;
+  }
+}
+
+// We use this to create equilateral triangles
+// $triangle-size - Used to set border-size. No default, set a px or em size.
+// $triangle-color - Used to set border-color which makes up triangle. No default
+// $triangle-direction - Used to determine which direction triangle
+// points. Options: top, bottom, left, right
+@mixin css-triangle($triangle-size, $triangle-color, $triangle-direction) {
+  border: inset $triangle-size;
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+  @if ($triangle-direction == top) {
+    border-color: $triangle-color transparent transparent transparent;
+    border-top-style: solid;
+  }
+  @if ($triangle-direction == bottom) {
+    border-color: transparent transparent $triangle-color transparent;
+    border-bottom-style: solid;
+  }
+  @if ($triangle-direction == left) {
+    border-color: transparent transparent transparent $triangle-color;
+    border-left-style: solid;
+  }
+  @if ($triangle-direction == right) {
+    border-color: transparent $triangle-color transparent transparent;
+    border-right-style: solid;
+  }
+}
+
+
+// ** Breadcrumb ** //
+
+// Breadcrumb container
+@mixin crumb-container {
+  @include radius($global-radius);
+  background-color: tint($gray_8, 60%);
+  border-color: $gray_8;
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  list-style: none;
+  margin: rem-calc(18 0);
+  overflow: hidden;
+  padding: rem-calc(9 14 9);
+}
+
+// Individual breadcrumbs
+@mixin crumbs {
+  color: $anchor-font-color;
+  font-size: rem-calc(11);
+  text-transform: uppercase;
+
+  &:hover, &:focus {
+    color: $anchor-font-color-hover;
+    text-decoration: none;
+  }
+
+  &:before {
+    content: "/";
+    color: $gray_6;
+    margin: rem-calc(0 12);
+    position: relative;
+    top: 1px;
+  }
+
+  &:first-child:before {
+    content: "";
+    margin: 0;
+  }
+}
+
+
+// ** Main-nav ** //
+
+// Superfish
+@mixin sf-main-nav-dropdown {
+  @include clearfix();
+  @include radius($global-radius);
+  background-color: $gray_3;
+  z-index: 97; // override Superfish library
+
+  li {
+    @include adjust-font-size-to(14px);
+    z-index: 98; // override Superfish library
+  }
+
+  li:hover,
+  li.sfHover,
+  li:hover ul,
+  li.sfHover ul {
+    z-index: 99; // override Superfish library
+  }
+
+  // Level one navigation
+  > li.sf-depth-1 {
+    border-right: 1px solid $gray_6;
+
+    &.first > a {
+      @include side-radius(left);
+    }
+
+    &.last {
+      border-right: none;
+
+      > a {
+        @include side-radius(right);
+      }
+    }
+
+    &:hover > ul,
+    &:focus > ul,
+    &.sfHover > ul {
+      top: 100%;
+    }
+  }
+
+  // Global links
+  a[class*="sf-depth"] {
+    @include block-glowing-effect(hover, 0.15s, scale-color($black, $lightness: 20%));
+    @include single-transition(background-color);
+    color: $white;
+    display: block;
+    padding: rem-calc(14 18);
+    text-decoration: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      @include radius($global-radius);
+      background-color: $eigengrau;
+    }
+  }
+
+  // Megamenu dropdown
+  ul.sf-megamenu {
+    @include side-radius(bottom);
+    background-color: $gray_3;
+
+    a {
+      padding: rem-calc(7 14);
+    }
+
+    .sf-no-children a {
+      padding: rem-calc(7 21);
+
+      &:before {
+        @include adjust-font-size-to(11px);
+        content: "↳\00a0\00a0";
+      }
+    }
+
+    .last.sf-no-children a,
+    .firstandlast.sf-no-children a {
+      @include side-radius(bottom);
+    }
+  }
+}
+
+// Superfish accordion
+@mixin sf-main-nav-accordion {
+  @include radius(0);
+  @include side-radius(bottom);
+
+  > li.sf-depth-1 {
+    border-top: 1px solid $gray_6;
+    border-right: none;
+
+    > ul {
+      @include box-shadow($eigengrau 0px 2px 10px inset);
+      background-color: $gray_6;
+
+      .sf-no-children a {
+        padding: rem-calc(7 21);
+
+        &:before {
+          @include adjust-font-size-to(11px);
+          content: "↳\00a0\00a0";
+        }
+      }
+    }
+
+    // Sub-menu trigger
+    .sf-accordion-button {
+      @include radius($global-radius);
+      @include replace-text('vendor/alphecca/images/icons/menu-open-white.svg', 50%, 50%);
+      background-color: $gray_6;
+      background-size: 22px 22px;
+      color: $white;
+      display: block;
+      height: 26px;
+      padding: 2px 3px;
+      position: absolute;
+      right: 18px;
+      top: 14px;
+      width: 28px;
+      z-index: 100;
+    }
+
+    > .sf-accordion-button {
+      background-color: $gray_3;
+    }
+  }
+}
+
+
+// ** Sub-nav ** //
+
+$sub-nav-item-divider: "|" !default;
+$sub-nav-item-divider-margin: rem-calc(12) !default;
+
+// $primary - Used to set level of navigation. Default: true
+@mixin sub-nav($primary:true) {
+  @include horizontal-list($padding: false);
+  margin: rem-calc(10 0);
+
+  li {
+    @include adjust-font-size-to(11px);
+    color: $gray_8;
+    font-family: $body-font-family;
+    margin-#{$default-float}: rem-calc(16);
+    margin-bottom: rem-calc(10);
+    text-transform: uppercase;
+
+    a {
+      color: $secondary-color;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+  color: $gray_6;
+      }
+    }
+
+    a.active {
+      @include radius($global-radius);
+      background: $anchor-font-color;
+      color: $white;
+      cursor: default;
+      padding: rem-calc(3 16);
+
+      &:hover,
+      &:focus {
+  background: $anchor-font-color-hover;
+      }
+    }
+
+    @if $sub-nav-item-divider != "" {
+      margin-#{$default-float}: 0;
+      padding-#{$opposite-direction}: 0;
+
+      &:before {
+        content: "#{$sub-nav-item-divider}";
+        margin: 0 $sub-nav-item-divider-margin;
+      }
+
+      &:first-child:before {
+        content: "";
+        margin: 0;
+      }
+    }
+  }
+
+  // Secondary level
+  @if $primary == false {
+    @include radius($global-radius);
+    background: tint($gray_8, 80%);
+    border: 1px solid $gray_8;
+    margin: rem-calc(-10 0 16);
+    padding: rem-calc(9 18 0);
+
+    li {
+      margin-bottom: rem-calc(9);
+
+      &:first-child {
+        a {
+          margin-#{$default-float}: rem-calc(16);
+        }
+
+        &:before {
+          color: $secondary-color;
+          content: "↳";
+        }
+      }
+    }
+  }
+}
+
+
+// ** Side-nav ** //
+
+@mixin side-nav {
+  list-style-position: inside;
+  list-style-type: none;
+  margin: rem-calc(14 0);
+  padding: 0;
+
+  li {
+    @include adjust-font-size-to(14px);
+
+    a {
+      border-top: 1px solid $gray_8;
+      display: block;
+      padding: rem-calc(7);
+    }
+
+    > &.first > a:first-child {
+      border-top: none;
+    }
+
+    &.active > a:first-child,
+    &.active-trail > a:first-child {
+      background: tint($gray_8, 80%);
+      color: $gray_3;
+      font-weight: normal;
+    }
+
+    // Only one sub-level recommended since sidebars/columns
+    // aren't usually wide enough to accommodate additional levels
+    // without unsightly link text wrapping.
+    ul {
+      margin: 0;
+
+      a {
+        padding-left: rem-calc(14);
+
+        &:before {
+          @include adjust-font-size-to(11px);
+          content: "↳\00a0\00a0";
+        }
+      }
+    }
+  }
+}
+
+
+// ** Pagination ** //
+
+// Style the pagination container. Currently only used when centering elements
+// $center - Default: false, Options: true
+@mixin pagination-container($center:false) {
+  @if $center { text-align: center; }
+}
+
+// Style the current list item. Do not assume that the current item has
+// an anchor <a> element.
+// $has-anchor - Default: false, Options: true
+@mixin pagination-current-item($has-anchor:false) {
+  @if $has-anchor {
+    a {
+      background: $primary-color;
+      color: $white;
+      cursor: default;
+      font-weight: bold;
+
+      &:hover,
+      &:focus { background: $primary-color; }
+    }
+  } @else {
+    @include radius($global-radius);
+    background: $primary-color;
+    color: $white;
+    cursor: default;
+    font-weight: bold;
+    height: auto;
+    padding: rem-calc(1 10 1);
+
+    &:hover,
+    &:focus { background: $primary-color; }
+  }
+}
+
+// We use this mixin to set the properties for creating pagination
+// $center - Left or center align the li elements. Default: false
+// $base-style - Sets base styles for pagination. Default: true, Options: false
+@mixin pagination($center:false, $base-style:true) {
+  @if $base-style {
+    display: block;
+    height: rem-calc(24);
+    margin-#{$default-float}: 0;
+    margin-#{$opposite-direction}: 0;
+    padding: 0;
+
+    li {
+      @include adjust-font-size-to(14px);
+      color: $gray_6;
+      height: rem-calc(24);
+      margin-#{$opposite-direction}: rem-calc(5);
+
+      a {
+        @include radius($global-radius);
+        color: $gray_6;
+        display: block;
+        padding: rem-calc(1 10 1);
+        text-decoration: none;
+      }
+
+      &:hover a,
+      &:focus a,
+      a:focus { background: $gray_8; color: $secondary-color; }
+
+      &.pager-current { @include pagination-current-item(); }
+    }
+  }
+
+  // Left or center align the li elements
+  li {
+    @if $center {
+      display: inline-block;
+      float: none;
+    } @else {
+      display: block;
+      float: $default-float;
+    }
+  }
+}
+
+
+// ** Tables ** //
+
+@mixin table {
+  background: $white;
+  border: 1px solid $gray_8;
+  border-collapse: separate;
+  border-spacing: 1px;
+  margin-bottom: rem-calc(18);
+  width: 100%;
+
+  caption {
+    padding-bottom: rem-calc(9);
+    text-align: left;
+  }
+
+  thead,
+  tfoot {
+    background: tint($gray_8, 60%);
+
+    tr {
+      th,
+      td {
+        padding: rem-calc(9 14);
+        text-align: $default-float;
+      }
+      th {
+        @include adjust-font-size-to(14px);
+        @include boldheader(700, $gray, "", uppercase);
+      }
+    }
+  }
+
+  tr {
+    td {
+      @include adjust-font-size-to(14px);
+      padding: rem-calc(9 14);
+    }
+
+    &.even { background: tint($gray_8, 80%); }
+  }
+
+  thead tr th,
+  tfoot tr th,
+  tbody tr td,
+  tr td,
+  tfoot tr td { display: table-cell; line-height: rem-calc(18); }
+}
+
+
+// ** Forms ** //
+
+$input-include-glowing-effect: true !default;
+
+// Form elements
+@mixin form-element {
+  @include block-glowing-effect(focus, 0.45s, scale-color($white, $lightness: -40%));
+  @include radius($global-radius);
+  @include box-shadow(inset 0 1px 2px rgba(0,0,0,0.1));
+  background-color: $paperwhite;
+  border: 1px solid scale-color($white, $lightness: -20%);
+  color: $secondary-color;
+  display: block;
+  font-size: rem-calc(14);
+  height: (rem-calc(14) + (rem-calc(16) * 1.5) - rem-calc(1));
+  margin: 0 0 rem-calc(16) 0;
+  padding: rem-calc(16) / 2;
+  width: 100%;
+
+  // Basic focus styles
+  &:focus {
+    background: scale-color($paperwhite, $lightness: -2%);
+    border-color: scale-color($white, $lightness: -40%);
+    outline: none;
+  }
+
+  // Disabled background input background color
+  &[disabled] { background-color: tint($gray_8, 80%); }
+}
+
+// Form labels
+@mixin form-label {
+  color: $gray_3;
+  cursor: pointer;
+  display: block;
+  font-size: rem-calc(14);
+  font-weight: 700;
+  margin-bottom: rem-calc(8);
+}
+
+// Fieldsets
+@mixin fieldset {
+  background-color: $white;
+  border: 1px solid $gray_8;
+  margin: rem-calc(18 0);
+  padding: rem-calc(20) !important;
+
+  // Legend styles
+  legend {
+    background: $paperwhite;
+    font-weight: bold;
+    margin: 0;
+    margin-#{$default-float}: rem-calc(-3);
+    padding: rem-calc(0 3);
+  }
+}
+
+// We use this mixin to control border and background color of error inputs
+// $bg-color - Default: $pale-red
+// $border-color - Default: $light-red
+@mixin form-error-color($bg-color:$pale-red, $border-color:$light-red) {
+  background-color: $pale-red;
+  border-color: $alert-color;
+
+  // Go back to normal on focus
+  &:focus {
+    background: scale-color($paperwhite, $lightness: -2%);
+    border-color: scale-color($white, $lightness: -40%);
+  }
+}
+
+// We use this mixin to create postfix/prefix form Labels
+@mixin prefix-postfix-base {
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  font-size: rem-calc(14);
+  height: (rem-calc(14) + (rem-calc(16) * 1.5) - rem-calc(1));
+  line-height: (rem-calc(14) + (rem-calc(16) * 1.5) - rem-calc(1));
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  z-index: 2;
+}
+
+// We use this mixin to create prefix label styles
+// $bg - Default: scale-color($white, $lightness: -5%);
+// $is-button - Toggle position settings if prefix is a button. Default: false
+@mixin prefix($bg:scale-color($white, $lightness: -5%), $is-button:false) {
+  @if $bg {
+    $bg-lightness: lightness($bg);
+    background: $bg;
+    border-color: scale-color($bg, $lightness: -11%);
+    border-#{$opposite-direction}: none;
+
+    // Control the font color based on background brightness
+    @if $bg-lightness > 70% or $bg == yellow { color: $gray_3; }
+    @else { color: $paperwhite; }
+  }
+
+  @if $is-button {
+    border: none;
+    line-height: rem-calc(34);
+    padding-#{$default-float}: 0;
+    padding-#{$opposite-direction}: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: center;
+  }
+}
+
+// We use this mixin to create postfix label styles
+// $bg - Default: scale-color($white, $lightness: -5%);
+// $is-button - Toggle position settings if prefix is a button. Default: false
+@mixin postfix($bg:scale-color($white, $lightness: -5%), $is-button:false) {
+  @if $bg {
+    $bg-lightness: lightness($bg);
+    background: $bg;
+    border-color: scale-color($bg, $lightness: -16%);
+    border-#{$default-float}: none;
+
+    // Control the font color based on background brightness
+    @if $bg-lightness > 70%  or $bg == yellow { color: $gray_3; }
+    @else { color: $paperwhite; }
+  }
+
+  @if $is-button {
+    border: none;
+    line-height: rem-calc(34);
+    padding-#{$default-float}: 0;
+    padding-#{$opposite-direction}: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: center;
+  }
+}
+
+// ** Buttons ** //
+
+// We use this mixin to create a default button base
+//
+// $style - Sets base styles. Can be set to false. Default: true
+// $display - Used to control display property. Default: inline-block
+@mixin button-base($style:true, $display:inline-block) {
+  @if $style {
+    border: none;
+    cursor: $cursor-pointer-value;
+    font-family: $body-font-family;
+    font-weight: normal;
+    line-height: normal;
+    margin: 0 0 rem-calc(20);
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  @if $display { display: $display; }
+}
+
+// We use this mixin to add button size styles
+//
+// $padding - Used to build padding for buttons - Default: rem-calc(12)
+// $full-width - We can set $full-width:true to remove side padding extend width - Default: false
+// $is-input - <input>'s and <button>'s take on strange padding. We added this to help fix that - Default: false
+@mixin button-size($padding:rem-calc(12), $full-width:false, $is-input:false) {
+  // We control which padding styles come through,
+  // these can be turned off by setting $padding:false
+  @if $padding {
+    padding-top: $padding;
+    padding-#{$opposite-direction}: $padding * 2;
+    padding-bottom: $padding + rem-calc(1);
+    padding-#{$default-float}: $padding * 2;
+
+    // We control the font-size based on mixin input
+    @if      $padding == rem-calc(16) { font-size: rem-calc(16); }
+    @else if $padding == rem-calc(10) { font-size: rem-calc(11); }
+    @else if $padding == rem-calc(14) { font-size: rem-calc(13); }
+    @else if $padding == rem-calc(18) { font-size: rem-calc(20); }
+    @else                             { font-size: $padding - rem-calc(2); }
+  }
+
+  // We can set $full-width:true to remove side padding extend width
+  @if $full-width {
+    // We still need to check if $padding is set
+    @if $padding {
+      padding-top: $padding;
+      padding-bottom: $padding + rem-calc(1);
+    } @else if $padding == false {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    padding-right: 0;
+    padding-left: 0;
+    width: 100%;
+  }
+
+  // <input>'s and <button>'s take on strange padding. We added this to help fix that
+  @if $is-input == rem-calc(18) {
+    border: none;
+    font-weight: normal !important;
+    padding-top: $is-input + rem-calc(.5);
+    padding-bottom: $is-input + rem-calc(.5);
+    -webkit-appearance: none;
+  }
+  @else if $is-input {
+    border: none;
+    font-weight: normal !important;
+    padding-top: $is-input + rem-calc(1);
+    padding-bottom: $is-input;
+    -webkit-appearance: none;
+  }
+}
+
+// We use this mixin to add button color styles
+//
+// $bg - Primary color - Default: $primary-color
+// $radius - If true, set to button radius which is $global-radius || explicitly set radius amount in px (ex. $radius:10px) - Default: false
+// $disabled - We can set $disabled:true to create a disabled transparent button - Default: false
+@mixin button-style($bg:$primary-color, $radius:false, $disabled:false) {
+  // We control which background styles are used,
+  // these can be removed by setting $bg:false
+  @if $bg {
+    // This find the lightness percentage of the background color.
+    $bg-lightness: lightness($bg);
+
+    background: $bg none;
+    border-color: scale-color($bg, $lightness: -20%);
+
+    &:link,
+    &:visited {
+      background: $bg none;
+      border-color: scale-color($bg, $lightness: -20%);
+      text-decoration: none;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: scale-color($bg, $lightness: -20%);
+      text-decoration: none;
+    }
+
+    // We control the text color for you based on the background color.
+    @if $bg-lightness > 70% {
+      color: $gray_3;
+
+      &:link,
+      &:visited,
+      &:hover,
+      &:focus { color: $gray_3; }
+    }
+    @else {
+      color: $white;
+
+      &:link,
+      &:visited,
+      &:hover,
+      &:focus { color: $white; }
+    }
+  }
+
+  // We can set $disabled:true to create a disabled transparent button
+  @if $disabled {
+    @include box-shadow(none);
+    @include opacity(0.7);
+    cursor: $cursor-default-value;
+
+    &:hover,
+    &:focus { background-color: $bg; }
+  }
+
+  // We can control how much button radius us used.
+  @if $radius == true { @include radius($global-radius); }
+  @else if $radius { @include radius($radius); }
+}
+
+// We use this to quickly create buttons with a single mixin.
+// As @jaredhardy puts it, "the kitchen sink mixin"
+//
+// $padding - Used to build padding for buttons - Default: rem-calc(12)
+// $bg - Primary color - Default: $primary-color
+// $radius - If true, set to button radius which is $global-radius || explicitly set radius amount in px (ex. $radius:10px) - Default:false
+// $full-width - We can set $full-width:true to remove side padding extend width - Default:false
+// $disabled - We can set $disabled:true to create a disabled transparent button - Default:false
+// $is-input - <input>'s and <button>'s take on strange padding. We added this to help fix that - Default:false
+// $is-prefix - Not used? Default:false.
+@mixin button($padding:rem-calc(12), $bg:$primary-color, $radius:false, $full-width:false, $disabled:false, $is-input:false, $is-prefix:false) {
+  @include button-base;
+  @include button-size($padding, $full-width, $is-input);
+  @include button-style($bg, $radius, $disabled);
+}
+
+// We use this to add styles for a button group container
+@mixin button-group-container($styles:true, $float:false) {
+  @if $styles {
+    @include clearfix();
+  }
+  @if $float {
+    float: #{$default-float};
+    margin-#{$opposite-direction}: rem-calc(10);
+  }
+}
+
+// We use this to control styles for button groups
+@mixin button-group-style($radius:true, $float:$default-float) {
+  .button, button, input[type="submit"], input[type="button"], #edit-cancel {
+    border-#{$opposite-direction}: 1px solid;
+    border-color: $body-bg;
+
+    // We use this to control the flow, or remove those styles completely.
+    @if $float {
+      margin: 0;
+      float: $float;
+
+      // Make sure the first child doesn't get the negative margin.
+      &:first-child { margin-#{$default-float}: 0; }
+    }
+
+    &:last-child {
+      border-#{$opposite-direction}: none;
+    }
+  }
+
+  // We use these to control left and right radius on first/last buttons in the group
+  @if $radius == true {
+    .button, button, input[type="submit"], input[type="button"], #edit-cancel {
+      &:first-child { @include side-radius($default-float, $global-radius); }
+      &:last-child { @include side-radius($opposite-direction, $global-radius); }
+    }
+  }
+  @else if $radius {
+    .button, button, input[type="submit"], input[type="button"], #edit-cancel {
+      &:first-child { @include side-radius($default-float, $radius); }
+      &:last-child { @include side-radius($opposite-direction, $radius); }
+    }
+  }
+}
+
+// ** Dropdown ** //
+
+// NOTE: Make default max-width change between list and content types.
+// Can add more width with classes, maybe .small, .medium, .large, etc.;
+// We use this to style the dropdown container element.
+// $content-list - Sets list-style. Default: list. Options: [list, content]
+// $triangle - Sets if dropdown has triangle. Default:true.
+// $max-width/$min-width - Default: 200px.
+@mixin dropdown-container($background-color:$white, $content:list, $triangle:true, $max-width:200px, $min-width:200px) {
+  margin-#{$default-float}: 0;
+  position: absolute;
+  white-space: nowrap;
+  top: -9999px;
+
+  > *:first-child { margin-top: 0; }
+  > *:last-child { margin-bottom: 0; }
+
+  @if $content == list {
+    background-color: $background-color;
+    border: 1px solid shade($white, 20%);
+    font-size: $rem-base;
+    height: auto;
+    width: 100%;
+    z-index: 500;
+  }
+  @else if $content == content {
+    background-color: $background-color;
+    border: 1px solid shade($white, 20%);
+    font-size: $rem-base;
+    height: auto;
+    padding: rem-calc(20);
+    width: 100%;
+    z-index: 500;
+  }
+
+  @if $triangle {
+    margin-top: 2px;
+
+    &:before {
+      @include css-triangle(6px, $background-color, bottom);
+      #{$default-float}: 10px;
+      position: absolute;
+      top: -(6px * 2);
+      z-index: 500;
+    }
+    &:after {
+      @include css-triangle(6px + 1, $background-color, bottom);
+      #{$default-float}: 10px - 1;
+      position: absolute;
+      top: -((6px + 1) * 2);
+      z-index: 499;
+    }
+
+    &.right:before {
+      left: auto;
+      right: 10px;
+    }
+    &.right:after {
+      left: auto;
+      right: 10px - 1;
+    }
+  }
+
+  @if $max-width { max-width: $max-width; }
+  @else { max-width: 200px; }
+
+  @if $min-width { min-width: $min-width; }
+  @else { min-width: 200px; }
+
+}
+
+// We use this to style the list elements or content inside the dropdown.
+@mixin dropdown-style {
+  font-size: rem-calc(14);
+  line-height: rem-calc(18);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    display: block;
+    padding: rem-calc(5 10);
+
+    &:hover,
+    &:focus { background: $gray_8; }
+  }
+}
+
+// ** Dropdown Button ** //
+
+// We use this mixin to build off of the button mixin and add dropdown button styles
+// $padding - Determines the size of button you're working with. Default: medium. Options [tiny, small, medium, large]
+// $pip-color - Color of the little triangle that points to the dropdown. Default: $white.
+// $base-style - Add in base-styles. This can be set to false. Default:true
+@mixin dropdown-button($padding:medium, $pip-color:$white, $base-style:true) {
+
+  // We add in base styles, but they can be negated by setting to 'false'.
+  @if $base-style {
+    position: relative;
+
+    // This creates the base styles for the triangle pip
+    &:before {
+      border-color: $white transparent transparent transparent;
+      border-style: solid;
+      content: "";
+      display: block;
+      height: 0;
+      position: absolute;
+      top: 50%;
+      width: 0;
+    }
+  }
+
+  // If we're dealing with tiny buttons, use these styles
+  @if $padding == tiny {
+    padding-#{$opposite-direction}: rem-calc(6) * 7;
+    &:before {
+      border-width: rem-calc(6);
+      #{$opposite-direction}: rem-calc(6) * 3;
+      margin-top: rem-calc(-6) / 2 + rem-calc(1);
+    }
+  }
+
+  // If we're dealing with small buttons, use these styles
+  @if $padding == small {
+    padding-#{$opposite-direction}: rem-calc(7) * 7;
+    &:before {
+      border-width: rem-calc(7);
+      #{$opposite-direction}: rem-calc(7) * 3;
+      margin-top: rem-calc(-7) / 2 + rem-calc(1);
+    }
+  }
+
+  // If we're dealing with default (medium) buttons, use these styles
+  @if $padding == medium {
+    padding-#{$opposite-direction}: rem-calc(9) * 6 + rem-calc(3);
+    &:before {
+      border-width: rem-calc(9) - rem-calc(3);
+      #{$opposite-direction}: rem-calc(9) * 2.5;
+      margin-top: rem-calc(-9) / 2 + rem-calc(2);
+    }
+  }
+
+  // If we're dealing with large buttons, use these styles
+  @if $padding == large {
+    padding-#{$opposite-direction}: rem-calc(11) * 5 + rem-calc(3);
+    &:before {
+      border-width: rem-calc(11) - rem-calc(6);
+      #{$opposite-direction}: rem-calc(11) * 2.5;
+      margin-top: rem-calc(-11) / 2 + rem-calc(3);
+    }
+  }
+
+  // We can control the pip color. We didn't use logic in this case, just set it and forget it.
+  @if $pip-color {
+    &:before { border-color: $pip-color transparent transparent transparent; }
+  }
+}
+
+@mixin dropdown-button-open($padding:medium, $pip-color:$white, $base-style:true) {
+  @if $base-style {
+    &:before { border-color: transparent transparent $white transparent; }
+  }
+
+  // If we're dealing with tiny buttons, use these styles
+  @if $padding == tiny {
+    &:before {
+      margin-top: rem-calc(-6);
+    }
+  }
+
+  // If we're dealing with small buttons, use these styles
+  @if $padding == small {
+    &:before {
+      margin-top: rem-calc(-7);
+    }
+  }
+
+  // If we're dealing with default (medium) buttons, use these styles
+  @if $padding == medium {
+    &:before {
+      margin-top: rem-calc(-9);
+    }
+  }
+
+  // If we're dealing with large buttons, use these styles
+  @if $padding == large {
+    &:before {
+      margin-top: rem-calc(-11);
+    }
+  }
+
+  @if $pip-color {
+    &:before { border-color: transparent transparent $pip-color transparent; }
+  }
+}

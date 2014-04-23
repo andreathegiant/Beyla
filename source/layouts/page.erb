@@ -7,17 +7,16 @@
 <html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/2001/XMLSchema#">
 <!--<![endif]-->
 <head>
-    <meta charset="utf-8">
-    <meta about="/node/98" property="sioc:num_replies" content="0" datatype="xsd:integer" />
-    <link rel="shortcut icon" href="http://d7.dev/sites/all/themes/adaptivetheme/at_subtheme/favicon.ico" type="image/vnd.microsoft.icon" />
-    <meta content="Causa Commodo Luptatum Typicus" about="/node/98" property="dc:title" />
-    <link rel="shortlink" href="/node/98" />
-    <meta name="Generator" content="Drupal 7 (http://drupal.org)" />
-    <link rel="canonical" href="/node/98" />
-    <title><%= @title %></title>
-    <%= stylesheet_link_tag 'screen.css' %>
-    <%= stylesheet_link_tag 'chosen/prism.css' %>
-    <%= stylesheet_link_tag 'chosen/chosen.css' %>
+  <meta charset="utf-8">
+  <meta about="/node/98" property="sioc:num_replies" content="0" datatype="xsd:integer" />
+  <link rel="shortcut icon" href="http://d7.dev/sites/all/themes/adaptivetheme/at_subtheme/favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta content="Causa Commodo Luptatum Typicus" about="/node/98" property="dc:title" />
+  <link rel="shortlink" href="/node/98" />
+  <meta name="Generator" content="Drupal 7 (http://drupal.org)" />
+  <link rel="canonical" href="/node/98" />
+  <title><%= @title %></title>
+  <%= stylesheet_link_tag 'screen' %>
+  <%= stylesheet_link_tag 'alphecca/alphecca-style' %>
 
   <style type="text/css" media="all">
     /* fix rtl for demo */
@@ -45,6 +44,7 @@
    
     <div class="large-6 large-offset-3 small-6 columns right">
       <%= partial "quicklinks" %>
+      <%= partial "search" %>
     </div>
    
     <div class="large-12 columns">

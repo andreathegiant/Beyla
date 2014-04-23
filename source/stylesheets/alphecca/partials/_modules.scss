@@ -1,0 +1,481 @@
+////////////////////////
+// Modules Partial
+//
+// Code here shouldn’t generate any selectors or rules.
+////////////////////////
+
+// ** Breadcrumb ** //
+
+@if $modules-breadcrumb {
+  .breadcrumb {
+    @include crumb-container;
+
+    a {
+      @include crumbs;
+    }
+  }
+}
+
+
+// ** Menus **//
+
+// * Main-nav * //
+// Superfish
+@if $modules-menus-main-nav-superfish {
+  .sf-accordion-toggle a {
+    @include adjust-font-size-to(14px, 1.33333333333333);
+    @include block-glowing-effect(hover, 0.15s, scale-color($black, $lightness: 20%));
+    @include radius($global-radius);
+    @include single-transition(background-color);
+    background-color: $gray_3;
+    background-image: url(../vendor/alphecca/images/icons/menu-white.svg);
+    background-position: 9px 50%;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    color: $white;
+    display: block;
+    height: 50px;
+    padding: rem-calc(9 9 9 50);
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+
+    &.sf-expanded {
+      @include radius(0);
+      @include side-radius(top);
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      @include radius($global-radius);
+      background-color: $eigengrau;
+    }
+  }
+
+  ul.sf-menu {
+    @include sf-main-nav-dropdown;
+  }
+}
+
+// * Sub-nav * //
+@if $modules-menus-sub-nav {
+  #header ul.menu:not(.sf-menu),
+  #footer ul.menu {
+    @include sub-nav();
+  }
+}
+
+// * Side-nav * //
+@if $modules-menus-side-nav {
+  #main [class*="sidebar"] ul.menu,
+  #main [class*="column"] ul.menu {
+    @include side-nav;
+  }
+}
+
+
+// ** Tabs ** //
+
+@if $modules-tabs {
+  ul.tabs {
+    @include sub-nav();
+  }
+}
+
+
+// ** Pager ** //
+
+@if $modules-pager {
+  ul.pager {
+    @include pagination-container(true);
+    @include pagination(true, true);
+  }
+}
+
+
+// ** Comments ** //
+
+@if $modules-comments {
+  .comment {
+    @include box-shadow(rgba(0, 0, 0, .05) 0px 2px 10px inset);
+    @include radius($global-radius);
+    background-color: tint($gray_8, 60%);
+    border: 1px solid $gray_8;
+    margin: rem-calc(24 0);
+    padding: rem-calc(9 32);
+    position: relative;
+
+    &:after, &:before {
+      border: solid transparent;
+      bottom: 100%;
+      content: " ";
+      height: 0;
+      left: 20%;
+      pointer-events: none;
+      position: absolute;
+      width: 0;
+    }
+    &:after {
+      border-color: rgba(239, 239, 239, 0);
+      border-bottom-color: tint($gray_8, 60%);
+      border-width: 20px;
+      margin-left: -20px;
+    }
+    &:before {
+      border-color: rgba(217, 217, 217, 0);
+      border-bottom-color: $gray_8;
+      border-width: 21px;
+      margin-left: -21px;
+    }
+
+    h3 {
+      border-bottom: 1px solid $gray_8;
+      margin-top: 0;
+    }
+
+    footer {
+      @include clearfix;
+
+      .submitted {
+        float: left;
+        margin: 0 rem-calc(18) 0 0;
+      }
+
+      .permalink {
+        background-image: url(../vendor/alphecca/images/icons/link.svg);
+        background-position: left 50%;
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        float: right;
+        padding-left: rem-calc(24);
+      }
+    }
+  }
+}
+
+
+// ** Orbit Slider ** //
+
+@if $modules-orbit-slider {
+  $orbit-caption-position: "bottom" !default; // Supported values: "bottom", "under"
+  $orbit-timer-show-progress-bar: true !default;
+
+  @-webkit-keyframes rotate {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-moz-keyframes rotate {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+  }
+  @-o-keyframes rotate {
+    from { -o-transform: rotate(0deg); }
+    to { -o-transform: rotate(360deg); }
+  }
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  // Orbit Graceful Loading
+  .slideshow-wrapper {
+    position: relative;
+
+    ul {
+      // Prevent bullets showing before .orbit-container is loaded
+      list-style-type: none;
+      margin: 0;
+
+      // Hide all list items
+      li,
+      li .orbit-caption { display: none; }
+
+      // ...except for the first one
+      li:first-child { display: block; }
+    }
+
+    .orbit-container {
+      background-color: transparent;
+
+      // Show images when .orbit-container is loaded
+      li {
+        display: block;
+
+        .orbit-caption { display: block; }
+      }
+    }
+  }
+
+  // Orbit preloader
+  .preloader {
+    @include radius(1000px);
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotate;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -o-animation-name: rotate;
+    -o-animation-duration: 1.5s;
+    -o-animation-iteration-count: infinite;
+    -o-animation-timing-function: linear;
+    animation-name: rotate;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    border: solid 3px;
+    border-color: $gray_3 $white;
+    display: block;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+    position: absolute;
+    height: 40px;
+    top: 50%;
+    width: 40px;
+  }
+
+  .orbit-container {
+    background: none;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    .orbit-slides-container {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: relative;
+
+      img { display: block; max-width: 100%; }
+
+      &>* {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        @if $text-direction == rtl {
+          margin-right: 100%;
+        }
+        @else {
+          margin-left: 100%;
+        }
+
+        &:first-child {
+          @if $text-direction == rtl {
+            margin-right: 0;
+          }
+          @else {
+            margin-left: 0;
+          }
+        }
+
+        .orbit-caption {
+          @if $orbit-caption-position == "bottom" {
+            bottom: 0;
+            position: absolute;
+          } @else if $orbit-caption-position == "under" {
+            position: relative;
+          }
+
+          @include adjust-font-size-to(14px);
+          background-color: rgba(51,51,51,0.8);
+          color: $white;
+          padding: rem-calc(9 14);
+          width: 100%;
+        }
+      }
+    }
+
+    .orbit-slide-number {
+      @include adjust-font-size-to(12px);
+      background: transparent;
+      color: $white;
+      #{$default-float}: 10px;
+      position: absolute;
+      top: 10px;
+      z-index: 10;
+
+      span { font-weight: 700; padding: rem-calc(5); }
+    }
+
+    .orbit-timer {
+      height: 6px;
+      position: absolute;
+      #{$opposite-direction}: 10px;
+      top: 12px;
+      width: 100px;
+      z-index: 10;
+
+      .orbit-progress {
+        @if $orbit-timer-show-progress-bar {
+          background-color: rgba(255,255,255,0.3);
+          display: block;
+          height: 3px;
+          position: relative;
+          right: 20px;
+          top: 5px;
+          width: 0%;
+        }
+      }
+
+      // Play button
+      & > span {
+        border: solid 4px $white;
+        border-top: none;
+        border-bottom: none;
+        display: none;
+        height: 14px;
+        position: absolute;
+        #{$opposite-direction}: 0;
+        top: 0px;
+        width: 11px;
+      }
+
+      // Pause button
+      &.paused {
+        & > span {
+          border: inset 8px;
+          border-right-style: solid;
+          border-color: transparent transparent transparent $white;
+          height: 14px;
+          #{$opposite-direction}: -4px;
+          top: 0px;
+          width: 11px;
+
+          &.dark {
+            border-color: transparent transparent transparent $gray_6;
+          }
+        }
+      }
+    }
+
+    &:hover .orbit-timer > span { display: block; }
+
+    // Let's get those controls to be right in the center on each side
+    .orbit-prev,
+    .orbit-next {
+      background-color: none;
+      color: $white;
+      height: 60px;
+      line-height: 50px;
+      margin-top: -25px;
+      position: absolute;
+      text-indent: -9999px !important;
+      top: 45%;
+      width: 36px;
+      z-index: 10;
+
+      &:hover,
+      &:focus {
+        background-color: rgba(0,0,0,0.3);
+      }
+
+      & > span {
+        border: inset 10px;
+        display: block;
+        height: 0;
+        margin-top: -10px;
+        position: absolute;
+        top: 50%;
+        width: 0;
+      }
+    }
+    .orbit-prev {
+      #{$default-float}: 0;
+
+      & > span {
+        border-color: transparent;
+        border-#{$opposite-direction}-color: $white;
+        border-#{$opposite-direction}-style: solid;
+      }
+
+      &:hover > span,
+      &:focus > span {
+        border-#{$opposite-direction}-color: $white;
+      }
+    }
+    .orbit-next {
+      #{$opposite-direction}: 0;
+
+      & > span {
+        border-color: transparent;
+        border-#{$default-float}-color: $white;
+        border-#{$default-float}-style: solid;
+        #{$default-float}: 50%;
+        margin-#{$default-float}: -4px;
+      }
+
+      &:hover > span,
+      &:focus > span {
+        border-#{$default-float}-color: $white;
+      }
+    }
+  }
+
+  .orbit-bullets-container { text-align: center; }
+
+  .orbit-bullets {
+    display: block;
+    float: none;
+    margin: 0 auto 30px auto;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    top: 10px;
+
+    li {
+      @include radius(1000px);
+      background: $gray_6;
+      display: inline-block;
+      float: none;
+      height: rem-calc(9);
+      margin-#{$opposite-direction}: 6px;
+      width: rem-calc(9);
+
+      &.active {
+        background: $gray_3;
+      }
+
+      &:last-child { margin-#{$opposite-direction}: 0; }
+    }
+  }
+
+  .touch {
+    .orbit-container {
+      .orbit-prev,
+      .orbit-next { display: none; }
+    }
+
+    .orbit-bullets { display: none; }
+  }
+}
+
+
+// ** Dropdown ** //
+
+@if $modules-dropdown {
+  #block-user-login {
+    h2.button[data-dropdown] {
+      @include dropdown-button();
+    }
+    .content[data-dropdown-content] {
+      @include dropdown-container($content:content, $triangle:true, $max-width:300px, $min-width:300px);
+    }
+  }
+
+  #block-system-user-menu {
+    h2.button[data-dropdown] {
+      @include dropdown-button();
+    }
+    .content[data-dropdown-content] {
+      @include dropdown-container();
+
+      ul {
+        @include dropdown-style;
+      }
+    }
+  }
+}

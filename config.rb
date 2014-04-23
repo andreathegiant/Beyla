@@ -1,3 +1,5 @@
+require 'toolkit';
+require 'sassy-buttons';
 ###
 # Compass
 ###
@@ -46,6 +48,8 @@
 # end
 
 set :css_dir, 'stylesheets'
+
+set :sass_dir, 'stylesheets/sass'
 
 set :js_dir, 'javascripts'
 

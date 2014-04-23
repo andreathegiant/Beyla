@@ -1,0 +1,619 @@
+////////////////////////
+// Styleguide Partial
+////////////////////////
+
+// ** Base ** //
+// A Base rule is applied to an element using an element selector, a descendent
+// selector, or a child selector, along with any pseudo-classes. It doesn’t
+// include any class or ID selectors. It is defining the default styling for how
+// that element should look in all occurrences on the page.
+// -- http://smacss.com/book/type-base
+
+// * Global Elements * //
+@if $styleguide-global {
+  html,
+  body {
+    font-size: $base-font-size;
+  }
+
+  body {
+    background: $body-bg;
+    color: $body-font-color;
+    cursor: $cursor-default-value;
+    font-family: $body-font-family;
+    font-style: $body-font-style;
+    font-weight: $body-font-weight;
+    line-height: $base-line-height;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+}
+
+// * Anchors * //
+@if $styleguide-anchors {
+  a {
+    &:link {
+      color: $anchor-font-color;
+      text-decoration: none;
+    }
+    &:visited {
+      color: $anchor-font-color-visited;
+      text-decoration: none;
+    }
+    &:hover,
+    &:focus {
+      color: $anchor-font-color-hover;
+      text-decoration: underline;
+    }
+    &:active {
+      color: $anchor-font-color-active;
+    }
+  }
+}
+
+// * Headings * //
+@if $styleguide-headings {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $OpenSans;
+    text-rendering: optimizeLegibility;
+  }
+  h1 {
+    @include adjust-font-size-to(36px);
+    @include boldheader(700, $eigengrau, "", "");
+    margin: rhythm(0.5, 36px) 0 rhythm(1, 36px) 0;
+  }
+  h2 {
+    @include adjust-font-size-to(30px);
+    @include quietheader(300, $gray, "", "");
+    margin: rhythm(1, 30px) 0;
+  }
+  h3 {
+    @include adjust-font-size-to(25px);
+    @include quietheader(300, $eigengrau, "", "");
+    margin: rhythm(1, 25px) 0;
+  }
+  h4 {
+    @include adjust-font-size-to(21px);
+    @include boldheader(400, $gray, "", "");
+    margin: rhythm(1, 21px) 0;
+  }
+  h5 {
+    @include adjust-font-size-to(18px);
+    @include quietheader(300, $eigengrau, italic, "");
+    margin: rhythm(1, 18px) 0;
+  }
+  h6 {
+    @include adjust-font-size-to(15px);
+    @include boldheader(700, $gray, "", uppercase);
+    margin: rhythm(1, 15px) 0;
+  }
+}
+
+// * Images * //
+@if $styleguide-images {
+  // Get rid of gap under images by making them display: inline-block; by default
+  img {
+  //  @include radius($global-radius);
+  //  border: 1px solid $gray_8;
+    display: inline-block;
+  //  padding: rem-calc(9);
+    vertical-align: middle;
+
+    a & {
+      border: none;
+    }
+  }
+}
+
+// * Tables * //
+@if $styleguide-tables {
+  table {
+    @include table;
+  }
+}
+
+// * Typography Defaults * //
+@if $styleguide-typo-defaults {
+  p {
+    margin: rem-calc(18 0);
+  }
+
+  hr {
+    border: solid $gray_8;
+    border-width: 1px 0 0;
+    clear: both;
+    height: 0;
+    margin: rem-calc(18 0);
+  }
+
+  em,
+  i {
+    font-style: italic;
+    line-height: inherit;
+  }
+
+  strong,
+  b {
+    font-weight: bold;
+    line-height: inherit;
+  }
+
+  small {
+    color: $gray;
+    font-size: 60%;
+    line-height: inherit;
+  }
+
+  pre {
+    @include box-shadow(rgba(0, 0, 0, .05) 0px 2px 10px inset);
+    background-color: tint($gray_8, 80%);
+    margin-bottom: rem-calc(18);
+    padding: rem-calc(14);
+  }
+
+  code {
+    color: $secondary-color;
+    font-family: $monospace;
+    font-size: 90%;
+  }
+
+  sup {
+    @include adjust-font-size-to(11px);
+    margin: rem-calc(3 0 -3);
+  }
+
+  sub {
+    @include adjust-font-size-to(11px);
+    margin: rem-calc(-3 0 3);
+  }
+}
+
+// * Lists * //
+@if $styleguide-lists {
+  :not(nav) ul,
+  ol,
+  dl {
+    list-style-position: outside;
+    margin-bottom: rem-calc(18);
+  }
+}
+
+// * Unordered Lists * //
+@if $styleguide-unordered-lists {
+  ul {
+    margin-#{$default-float}: 1.1rem;
+    li {
+      ul,
+      ol {
+        font-size: 1rem; /* Override nested font-size change */
+        margin-#{$default-float}: rem-calc(18);
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// * Ordered Lists * //
+@if $styleguide-ordered-lists {
+  ol {
+    margin-#{$default-float}: 1.4rem;
+    li {
+      ul,
+      ol {
+        margin-#{$default-float}: rem-calc(18);
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// * Definition Lists * //
+@if $styleguide-definition-lists {
+  dl {
+    dt {
+      @include adjust-font-size-to(14px);
+      @include boldheader(700, $gray, "", uppercase);
+      margin-bottom: 0.3rem;
+    }
+    dd { margin-bottom: rem-calc(14); }
+  }
+}
+
+// * Abbreviations * //
+@if $styleguide-abbreviations {
+  abbr,
+  acronym {
+    border-bottom: 1px dotted $gray_8;
+    color: $body-font-color;
+    cursor: $cursor-help-value;
+    font-size: 90%;
+    text-transform: uppercase;
+  }
+  abbr {
+    text-transform: none;
+  }
+}
+
+// * Blockquotes * //
+@if $styleguide-blockquotes {
+  blockquote {
+    background-color: tint($gray_8, 80%);
+    border-#{$default-float}: 1px solid $gray_8;
+    margin: rem-calc(0 0 18);
+    padding: rem-calc(3 18);
+
+    cite {
+      color: $gray_6;
+      display: block;
+      font-size: rem-calc(14);
+      &:before {
+        content: "\2014 \0020";
+      }
+
+      a,
+      a:visited {
+        color: $gray_6;
+      }
+    }
+  }
+  blockquote,
+  blockquote p {
+    color: scale-color($gray_3, $lightness: 35%);
+  }
+}
+
+
+// ** Forms ** //
+
+@if $styleguide-forms {
+  // * Standard Forms * //
+  form { margin: 0 0 rem-calc(16); }
+
+  // * Label Styles * //
+  @if $styleguide-label-styles {
+    label {
+      @include form-label;
+
+      // Styles for required inputs
+      .form-required {
+        color: $red;
+      }
+    }
+  }
+
+  // * Select * //
+  @if $styleguide-select {
+    select {
+      @include radius($global-radius);
+      background:
+        $paperwhite
+        url('data:image/svg+xml;base64, PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iM3B4IiB2aWV3Qm94PSIwIDAgNiAzIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA2IDMiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwb2x5Z29uIHBvaW50cz0iNS45OTIsMCAyLjk5MiwzIC0wLjAwOCwwICIvPjwvc3ZnPg==') no-repeat;
+      background-position-x: 97%;
+      background-position-y: center;
+      border: 1px solid scale-color($white, $lightness: -20%);
+      font-size: rem-calc(14);
+      padding: rem-calc(16) / 2;
+      -webkit-appearance: none !important;
+
+      &:hover,
+      &:focus {
+        background:
+          scale-color($paperwhite, $lightness: -3%)
+          url('data:image/svg+xml;base64, PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iM3B4IiB2aWV3Qm94PSIwIDAgNiAzIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA2IDMiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwb2x5Z29uIHBvaW50cz0iNS45OTIsMCAyLjk5MiwzIC0wLjAwOCwwICIvPjwvc3ZnPg==') no-repeat;
+        background-position-x: 97%;
+        background-position-y: center;
+        border-color: scale-color($white, $lightness: -40%);
+      }
+    }
+
+    // ::-ms-expand pseudo-element
+    // http://msdn.microsoft.com/en-us/library/windows/apps/hh465742.aspx
+    select::-ms-expand {
+      display: none;
+    }
+
+    // ???
+    @-moz-document url-prefix() {
+      select { background: $paperwhite; }
+      select:hover, select:focus { background: scale-color($paperwhite, $lightness: -3%); }
+    }
+  }
+
+  // * Post- & Pre-fix * //
+  @if $styleguide-post-pre-fix {
+    // Attach elements to the beginning or end of an input
+    .prefix,
+    .postfix { @include prefix-postfix-base; }
+
+    // Adjust padding, alignment and radius if pre/post element is a button
+    .postfix.button { @include button-size(false,false,false); @include postfix(false,true); }
+    .prefix.button { @include button-size(false,false,false); @include prefix(false,true); }
+    .prefix.button.radius { @include radius(0); @include side-radius(left, $global-radius); }
+    .postfix.button.radius { @include radius(0); @include side-radius(right, $global-radius); }
+    .prefix.button.round { @include radius(0); @include side-radius(left, $global-rounded); }
+    .postfix.button.round { @include radius(0); @include side-radius(right, $global-rounded); }
+
+    // Separate prefix and postfix styles when on span or label so buttons keep their own
+    span.prefix, label.prefix { @include prefix();
+      &.radius { @include radius(0); @include side-radius(left, $global-radius); }
+    }
+    span.postfix, label.postfix { @include postfix();
+      &.radius { @include radius(0); @include side-radius(right, $global-radius); }
+    }
+  }
+
+  // * Input Groups * //
+  @if $styleguide-input-groups {
+    // Input groups will automatically style first and last elements of the group
+    .input-group {
+      &.radius {
+        &>*:first-child,  &>*:first-child * {
+          @include side-radius($default-float, $global-radius);
+        }
+        &>*:last-child, &>*:last-child * {
+          @include side-radius($opposite-direction, $global-radius);
+        }
+      }
+      &.round {
+        &>*:first-child,  &>*:first-child * {
+          @include side-radius($default-float, $global-rounded);
+        }
+        &>*:last-child, &>*:last-child * {
+          @include side-radius($opposite-direction, $global-rounded);
+        }
+      }
+    }
+  }
+
+  // * Inputs * //
+  @if $styleguide-inputs {
+    // We use this to get basic styling on all basic form elements
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="email"],
+    input[type="number"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="time"],
+    input[type="url"],
+    textarea {
+      @include form-element;
+      @if not $input-include-glowing-effect {
+          @include single-transition(all, 0.15s, linear);
+      }
+      -webkit-appearance: none;
+
+      // Error Handling
+      &.error {
+        @include form-error-color;
+      }
+    }
+
+    // Add height value for select elements to match text input height
+    select {
+      height: (rem-calc(14) + (rem-calc(16) * 1.5) - rem-calc(1));
+    }
+
+    // Adjust margin for form elements below
+    input[type="file"],
+    input[type="checkbox"],
+    input[type="radio"],
+    select {
+      margin: 0 0 rem-calc(16) 0;
+    }
+
+    input[type="checkbox"] + label,
+    input[type="radio"] + label {
+      display: inline-block;
+      margin-#{$default-float}: rem-calc(16) * .5;
+      margin-#{$opposite-direction}: rem-calc(16);
+      margin-bottom: 0;
+      vertical-align: baseline;
+    }
+
+    // Normalize file input width
+    input[type="file"] {
+      width: 100%;
+    }
+  }
+
+  // * Fieldset * //
+  @if $styleguide-fieldset {
+    // We add basic fieldset styling
+    fieldset {
+      @include fieldset;
+    }
+  }
+}
+
+
+// ** Buttons ** //
+
+@if $styleguide-buttons {
+  // Default styles
+  .button, button,
+  input[type="submit"], input[type="button"] {
+    @include button-base;
+    @include button-size;
+    @include button-style($radius:true);
+
+    @include single-transition(background-color);
+
+    &.secondary { @include button-style($bg:$secondary-color); }
+    &.success   { @include button-style($bg:$success-color); }
+    &.alert     { @include button-style($bg:$alert-color); }
+
+    &.large  { @include button-size($padding:rem-calc(18)); }
+    &.small  { @include button-size($padding:rem-calc(14)); }
+    &.tiny   { @include button-size($padding:rem-calc(10)); }
+    &.expand { @include button-size($padding:null,$full-width:true); }
+
+    &.left-align  { text-align: left; text-indent: rem-calc(12); }
+    &.right-align { text-align: right; padding-right: rem-calc(12); }
+
+    &.radius { @include button-style($bg:false, $radius:true); }
+    &.round  { @include button-style($bg:false, $radius:$global-rounded); }
+
+    &.disabled, &[disabled] { @include button-style($bg:$primary-color, $disabled:true);
+      &.secondary { @include button-style($bg:$secondary-color, $disabled:true); }
+      &.success { @include button-style($bg:$success-color, $disabled:true); }
+      &.alert { @include button-style($bg:$alert-color, $disabled:true); }
+    }
+  }
+  button, input[type="submit"], input[type="button"] {
+    @include button-size($padding:false, $is-input:rem-calc(12));
+  }
+}
+
+@if $styleguide-button-groups {
+  // Button groups
+  .button-group {
+    @include button-group-container;
+
+    @include button-group-style();
+
+    // Override default button styles
+    .button, button,
+    input[type="submit"], input[type="button"] {
+      @include button-style($radius:0);
+    }
+
+    &.radius { @include button-group-style($radius:$global-radius, $float:null); }
+    &.round { @include button-group-style($radius:$global-rounded, $float:null); }
+  }
+  .button-bar {
+    @include clearfix;
+    .button-group { @include button-group-container($styles:false, $float:true); }
+  }
+}
+
+
+// ** System ** //
+
+// * Messages * //
+@if $styleguide-system-messages {
+  div.messages {
+    @include radius($global-radius);
+    background-position: rem-calc(14) rem-calc(18);
+    background-repeat: no-repeat;
+    border: 1px solid;
+    margin: rem-calc(18 0);
+    padding: rem-calc(14 18 14 44);
+  }
+  div.status {
+    background-color: $pale-green;
+    background-image: url(../vendor/alphecca/images/icons/status.svg);
+    background-size: 16px 16px;
+    border-color: $light-green;
+    color: $green;
+  }
+  div.warning {
+    background-color: $pale-orange;
+    background-image: url(../vendor/alphecca/images/icons/warning.svg);
+    background-size: 16px 16px;
+    border-color: $light-orange;
+    color: $orange;
+  }
+  div.error {
+    background-color: $pale-red;
+    background-image: url(../vendor/alphecca/images/icons/error.svg);
+    background-size: 16px 16px;
+    border-color: $light-red;
+    color: $red;
+  }
+}
+
+// * Inline Links * //
+@if $styleguide-system-inline-links {
+  ul.links.inline {
+    @include horizontal-list;
+    margin: rem-calc(18 0);
+  }
+}
+
+// * Description * //
+@if $styleguide-system-description {
+  div.description {
+    color: $gray_3;
+    @include adjust-font-size-to(13px);
+    margin-bottom: rem-calc(9);
+  }
+}
+
+// * Forms * //
+@if $styleguide-system-forms {
+  #edit-cancel {
+    @include button($bg:$gray_8);
+    @include single-transition(background-color);
+  }
+}
+
+// * Tables * //
+@if $styleguide-system-tables {
+  .draggable {
+    a.tabledrag-handle {
+      height: (rem-calc(14) + (rem-calc(16) * 1.5) - rem-calc(1));
+
+      .handle {
+        @include box-sizing(content-box);
+      }
+    }
+  }
+}
+
+
+// ** Regions ** //
+
+// * Header * //
+@if $styleguide-regions-header {
+  #header {
+    border-bottom: 1px solid $gray_8;
+  }
+}
+
+// * Footer * //
+@if $styleguide-regions-footer {
+  #footer {
+    @include border-top-right-radius($global-radius);
+    @include border-top-left-radius($global-radius);
+    background-color: tint($gray_8, 60%);
+    border: 1px solid $gray_8;
+    border-bottom: none;
+  }
+}
+
+
+// ** Blocks ** //
+
+// * User login * //
+@if $styleguide-header-block-user-login {
+  #header #block-user-login {
+    ul {
+      @include sub-nav(false);
+      clear: both;
+    }
+  }
+}
+
+
+// ** Contrib ** //
+
+// * Chosen * //
+@if $styleguide-contrib-chosen {
+  .chosen-container {
+    margin: 0 0 rem-calc(16) 0;
+  }
+}
+
+// * Vertical Tabs * //
+@if $styleguide-contrib-vertical-tabs {
+  div.vertical-tabs {
+    background-color: $white;
+  }
+}

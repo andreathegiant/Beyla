@@ -1,0 +1,199 @@
+////////////////////////
+// Variables Partial
+//
+// Sass variables that generate a single value.
+// Code here shouldn’t generate any selectors or rules.
+////////////////////////
+
+// ** Colors ** //
+
+// Red family : use for DANGER, ERROR, REQUIRED : Hue ~357°
+$red:           hsl(359, 77%, 40%) !default; // #b5171a
+$light-red:     hsl(357, 82%, 78%) !default; // #f5999d
+$pale-red:      hsl(355, 50%, 95%) !default; // #f9eced
+
+// Orange family: use for WARNING, ALERT : Hue ~39°
+$orange:        hsl(30, 100%, 45%) !default; // #e67300
+$light-orange:  hsl(39, 99%, 72%) !default; // #fecd71
+$pale-orange:   hsl(60, 90%, 96%) !default; // #fefeec
+
+// Blue family: use for INFO, OPTIONAL ACTION, LINKS : Hue ~200°
+$blue:          hsl(200, 77%, 43%) !default; // #198ac2
+$light-blue:    hsl(200, 79%, 57%) !default; // #3baee8
+$pale-blue:     hsl(201, 52%, 95%) !default; // #ecf4f9
+
+// Green family: use for STATUS, SUCCESS, SUGGESTED ACTION : Hue ~70°
+$green:         hsl(71, 78%, 28%) !default; // #6b7f10
+$light-green:   hsl(70, 61%, 51%) !default; // #b5ce36
+$pale-green:    hsl(69, 56%, 93%) !default; // #f4f7e3
+
+// Canonical grays, defined by gray_[n] where [n] is floor/10 value of hsl()
+// I define grays this way to allow me to redefine grays into more meaningful
+// variables later, and to help minimize proliferation of grays (this is hard)
+$gray_3:          hsl(0, 0%, 35%) !default; // #595959
+$gray_6:          hsl(0, 0%, 67%) !default; // #ababab
+$gray_8:          hsl(0, 0%, 85%) !default; // #d9d9d9
+
+// Gray aliases. Meaningful gray names, aliased to canonical grays
+$gray:            $gray_3 !default;
+$light-gray:      $gray_6 !default;
+$pale-gray:       $gray_8 !default;
+$white:           white !default;
+$black:           black !default;
+$eigengrau:       hsl(240,14,10) !default;   // #16161d, use instead of pure black for text or large fields
+$paperwhite:      hsl(0,0,98) !default;     // #fafafa, use instead of pure white for large fields
+
+// Assign some colors
+$body-bg:           $paperwhite !default;
+$body-font-color:   $eigengrau !default;
+$primary-color:     $blue !default;
+$secondary-color:   $gray_3 !default;
+$alert-color:       $red !default;
+$success-color:     $green !default;
+$warning-color:     $orange !default;
+$info-color:        $light-blue !default;
+
+// Link colors.
+$anchor-font-color:         $blue !default;
+$anchor-font-color-hover:   $green !default;
+$anchor-font-color-active:  $red !default;
+$anchor-font-color-visited: $light-blue !default;
+
+
+// ** Fonts ** //
+
+// Stacks
+$Helvetica:     "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$SourceSansPro: "SourceSansPro", #{$Helvetica} !default;
+$OpenSans:      "Open Sans", #{$Helvetica} !default;
+$monospace:     Consolas, "Liberation Mono", Monaco, Courier, monospace !default;
+
+// Weight & style
+$body-font-weight: normal !default;
+$body-font-style: normal !default;
+
+// We use this to control font-smoothing
+$font-smoothing: antialiased !default;
+
+// We use these to control text direction settings
+$text-direction: ltr !default;
+
+// NOTE: No need to change this conditional statement, $text-direction variable controls it all.
+$default-float: left !default;
+$opposite-direction: right !default;
+@if $text-direction == ltr {
+  $default-float: left;
+  $opposite-direction: right;
+} @else {
+  $default-float: right;
+  $opposite-direction: left;
+}
+
+// Assign some fonts.
+$default-font-family: $OpenSans !default;
+
+$body-font-family: $default-font-family !default;
+$header-font-family: $default-font-family !default;
+$code-font-family: $monospace !default;
+
+
+// ** Typography ** //
+
+// The default font-size is set to 100% of the browser style sheet (usually 16px)
+// for compatibility with brower-based text zoom or user-set defaults.
+$base-font-size: 100% !default;
+
+// $base-line-height is 24px while $base-font-size is 16px
+$base-line-height: 150% !default;
+
+// This is the default html and body font-size for the base rem value.
+$rem-base: 16px !default;
+
+// Using 'rem' gives a fallback declaration in pixels for older browsers.
+$rhythm-unit: 'rem' !default;
+
+// Vertical rhythm
+//@include establish-baseline;
+
+
+// ** Cursors ** //
+
+$cursor-crosshair-value: crosshair !default;
+$cursor-default-value: default !default;
+$cursor-pointer-value: pointer !default;
+$cursor-help-value: help !default;
+$cursor-text-value: text !default;
+
+
+// ** Borders **//
+
+// We use these to make sure border radius matches unless we want it different.
+$global-radius: 3px !default;
+$global-rounded: 1000px !default;
+
+
+////////////////////////////////////////////////////////
+// Toggle Alphecca Styles
+//
+// Override inclusion of Alphecca styles in your theme.
+////////////////////////////////////////////////////////
+
+// * Styleguide * //
+$styleguide-global: true !default;
+$styleguide-anchors: true !default;
+$styleguide-headings: true !default;
+$styleguide-images: true !default;
+$styleguide-tables: true !default;
+$styleguide-typo-defaults: true !default;
+$styleguide-lists: true !default;
+$styleguide-unordered-lists: true !default;
+$styleguide-ordered-lists: true !default;
+$styleguide-definition-lists: true !default;
+$styleguide-abbreviations: true !default;
+$styleguide-blockquotes: true !default;
+$styleguide-forms: true !default;
+$styleguide-label-styles: true !default;
+$styleguide-select: true !default;
+$styleguide-post-pre-fix: true !default;
+$styleguide-input-groups: true !default;
+$styleguide-inputs: true !default;
+$styleguide-fieldset: true !default;
+$styleguide-buttons: true !default;
+$styleguide-button-groups: true !default;
+$styleguide-system-messages: true !default;
+$styleguide-system-inline-links: true !default;
+$styleguide-system-description: true !default;
+$styleguide-system-forms: true !default;
+$styleguide-system-tables: true !default;
+$styleguide-regions-header: true !default;
+$styleguide-regions-footer: true !default;
+$styleguide-header-block-user-login: true !default;
+$styleguide-contrib-chosen: true !default;
+$styleguide-contrib-vertical-tabs: true !default;
+
+// * Layout * //
+$layout-header: true !default;
+$layout-footer: true !default;
+$layout-header-block-views-search: true !default;
+$layout-header-block-user-login: true !default;
+$layout-header-block-user-menu: true !default;
+
+// * Modules * //
+$modules-breadcrumb: true !default;
+$modules-menus-main-nav-superfish: true !default;
+$modules-menus-sub-nav: true !default;
+$modules-menus-side-nav: true !default;
+$modules-tabs: true !default;
+$modules-pager: true !default;
+$modules-comments: true !default;
+$modules-orbit-slider: false !default;
+$modules-dropdown: true !default;
+
+// * States * //
+$states-styleguide-headings-anchors: true !default;
+$states-styleguide-unordered-lists: true !default;
+$states-styleguide-feed-icon: true !default;
+$states-layout-header-blocks: true !default;
+$states-modules-secondary-tabs: true !default;
+$states-modules-main-nav-accordion: true !default;
+$states-modules-dropdown: true !default;
