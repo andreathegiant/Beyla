@@ -15,7 +15,8 @@
   <meta name="Generator" content="Drupal 7 (http://drupal.org)" />
   <link rel="canonical" href="/node/98" />
   <title><%= @title %></title>
-  <%= stylesheet_link_tag 'screen.css' %>
+  <%= stylesheet_link_tag 'screen' %>
+  <%= stylesheet_link_tag 'alphecca/alphecca-style' %>
 
   <%= javascript_include_tag 'vendor/custom.modernizr.js' %>
   <%= javascript_include_tag 'vendor/zepto.js' %>
@@ -37,6 +38,7 @@
    
     <div class="large-6 large-offset-3 small-6 columns right">
       <%= partial "quicklinks" %>
+      <%= partial "search" %>
     </div>
    
     <div class="large-12 columns">
