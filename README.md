@@ -14,6 +14,7 @@ And Sass:
 
 ### Optional: using Bundler to manage dependencies
 Running Middleman through [Bundler](http://bundler.io) can help resolve Ruby dependencies (See *Troubleshooting* below). To install Bundler:
+
 `gem install bundler`
 
 ## Installing Beyla
