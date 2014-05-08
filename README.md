@@ -27,6 +27,15 @@ If you open a new terminal tab and in the `wires` directory run `middleman serve
 
 The only folder you should need to work with when prototyping is the `source` directory. In this directory you will find a number of different files types.
 
+## Troubleshooting
+
+If you receive an `Gem::LoadError` like this:
+
+```
+You have already activated middleman-core 3.3.2, but your Gemfile requires middleman-core 3.2.2. Prepending `bundle exec` to your command may solve this. (Gem::LoadError)
+```
+… you can either run middleman through Bundler as instructed, or you can resolve the dependencies by editing your `Gemfile` and/or updating your gems manually.
+
 ### Partials
 `_[name].erb` Files with this file extension are partials, which are small snippits of HTML or ruby that can be included in page or in template files. Good uses for partials are menus, blocks, footers, slideshows. To include a partial in a page or template, all you write is `<%= partial "path/to/partial" %>`. Do not append .erb at the end of the partial name.
 
