@@ -60,7 +60,7 @@ Beyla uses the [Foundation 4 grid system](http://foundation.zurb.com/docs/v/4.3.
 ##Linking in your files
 There are two template helpers in Middleman for linking. First, there is the middleman equivalent to an `<a>` tag, `<%= link_to 'Link Title', 'path/to/page.html' %>`. Additionally, there is the the link block template helper, which is for complex objects that should be linked in full, like an image or entire block:
 
-```
+```erb
 <% link_to 'Link Title', 'path/to/page.html' do %>
    <%= image_tag 'mylogo.png' %>
 <% end %>
